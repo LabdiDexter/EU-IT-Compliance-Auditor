@@ -56,7 +56,8 @@ function initApp() {
   document.getElementById("btn-prev-section").addEventListener("click", navigatePreviousSection);
   document.getElementById("btn-next-section").addEventListener("click", navigateNextSection);
   document.getElementById("btn-submit-assessment").addEventListener("click", submitAssessment);
-  document.getElementById("btn-cancel-assessment").addEventListener("click", cancelAssessment);
+  const btnCancel = document.getElementById("btn-cancel-assessment");
+  if (btnCancel) btnCancel.addEventListener("click", cancelAssessment);
 
   // Pulsanti del Report
   document.getElementById("btn-back-to-questions").addEventListener("click", backToQuestionnaire);
@@ -271,7 +272,7 @@ function renderCurrentSection() {
   if (!container) return;
   container.innerHTML = "";
 
-  currentQuestions.forEach(q => {
+  currentQuestions.forEach((q, qIndex) => {
     const card = document.createElement("div");
     card.className = "question-card";
     card.id = `q-card-${q.id}`;
@@ -289,10 +290,11 @@ function renderCurrentSection() {
 
     const currentAnswer = appState.answers[q.id].value;
     const currentEvidence = appState.answers[q.id].evidence;
+    const questionNumber = `Domanda ${qIndex + 1}`;
 
     card.innerHTML = `
       <div class="question-meta">
-        <span class="question-id-badge">${q.id}</span>
+        <span class="question-id-badge">${questionNumber}</span>
         <div class="question-badges">
           <span class="badge ${riskBadgeClass}">Rilevanza: ${riskLevel} (Peso: ${q.weight})</span>
           <span class="badge">Rif: ${q.article}</span>
@@ -650,6 +652,16 @@ function calculateComplianceScores() {
 
 function backToQuestionnaire() {
   switchScreen("screen-questionnaire");
+  // Riassicura che sidebar e domande siano aggiornate
+  renderSidebar();
+  renderCurrentSection();
+}
+
+// Annulla la valutazione e torna alla profilazione
+function cancelAssessment() {
+  if (confirm("Sei sicuro di voler annullare la valutazione? Le risposte inserite andranno perdute.")) {
+    resetAssessment();
+  }
 }
 
 function resetAssessment() {

@@ -166,6 +166,13 @@ body {
   font-size: 0.75rem;
   color: var(--text-secondary);
   font-weight: 500;
+  display: none; /* nascosta di default, visibile da 480px */
+}
+
+@media (min-width: 480px) {
+  .logo-text p {
+    display: block;
+  }
 }
 
 .header-actions {
@@ -577,6 +584,33 @@ body {
   }
 }
 
+/* Su mobile la sidebar non è sticky e la nav scorre in orizzontale */
+@media (max-width: 991px) {
+  .questionnaire-sidebar {
+    position: static;
+    padding: 1rem;
+  }
+
+  .regulation-nav ul {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .regulation-nav-btn {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.78rem;
+    width: auto;
+    justify-content: center;
+    gap: 0.4rem;
+  }
+
+  .sidebar-footer {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+  }
+}
+
 /* Sidebar di Navigazione */
 .questionnaire-sidebar {
   background-color: var(--bg-surface);
@@ -734,8 +768,9 @@ body {
 
 .question-meta {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.5rem;
 }
 
@@ -746,7 +781,8 @@ body {
 
 .question-badges {
   display: flex;
-  gap: 0.5rem;
+  flex-wrap: wrap;
+  gap: 0.4rem;
 }
 
 .question-text {
@@ -910,11 +946,23 @@ body {
 /* Pulsantiera Questionario */
 .questionnaire-actions {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   border-top: 1px solid var(--border-color);
   padding-top: 1.5rem;
-  gap: 1rem;
+  gap: 0.75rem;
+}
+
+@media (max-width: 575px) {
+  .questionnaire-actions {
+    flex-direction: column;
+  }
+
+  .questionnaire-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -1275,12 +1323,24 @@ body {
 /* Azioni Report */
 .report-actions {
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-end;
   align-items: center;
   border-top: 1px solid var(--border-color);
   padding-top: 1.5rem;
   margin-top: 1.5rem;
-  gap: 1rem;
+  gap: 0.75rem;
+}
+
+@media (max-width: 575px) {
+  .report-actions {
+    flex-direction: column;
+  }
+
+  .report-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 /* Elementi visualizzabili solo in stampa */
